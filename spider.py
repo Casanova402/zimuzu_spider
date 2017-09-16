@@ -60,10 +60,13 @@ def get_actual_links(soup, tab_num):
                 link = ""
         finally:
             if link != "":
-                print("[*] <"+source_name+"> "+source_size+":")
+                print("[*] <" + source_name + "> " + source_size + ":")
                 print(link)
                 print()
                 # down_links.append(link)
+            else:
+                print("[*] 无磁力或电驴链接")
+                print()
 
 
 def get_download_links(url, t):
@@ -121,6 +124,8 @@ def get_resource_link(t, source_number):
         ty = 'tv'
     elif t == '电影':
         ty = 'movie'
+    else:
+        ty = ""
     url = 'http://www.zimuzu.tv/resource/index_json/rid/'+str(source_number)+'/channel/'+ty
     header['Referer'] = 'http://www.zimuzu.tv/gresource/' + str(source_number)
     url_content = requests.get(url, header).text
