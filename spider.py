@@ -143,16 +143,19 @@ def search_resources(name):
 def search(name, auto=False):
     if not auto:
         resource_list = search_resources(name)
-        i = 1
-        for resource in resource_list:
-            print(str(i)+". "
-                  + resource.name+" "
-                  + resource.type)
-            i += 1
-        num = input("输入资源号: ")
-        resource_choose = resource_list[int(num)-1]
-        resource_url = get_resource_link(resource_choose.type, resource_choose.source_num)
-        get_download_links(resource_url, resource_choose.type)
+        if len(resource_list) != 0:
+            i = 1
+            for resource in resource_list:
+                print(str(i)+". "
+                      + resource.name+" "
+                      + resource.type)
+                i += 1
+            num = input("输入资源号: ")
+            resource_choose = resource_list[int(num)-1]
+            resource_url = get_resource_link(resource_choose.type, resource_choose.source_num)
+            get_download_links(resource_url, resource_choose.type)
+        else:
+            print("搜索不到该资源")
     else:
         print("不支持")
 
