@@ -45,8 +45,10 @@ def get_actual_links(soup, tab_num):
     for e in episodes:
         if e.name == 'li':
             episode_list.append(e)
-    down_links = []
+    # down_links = []
     for e in episode_list:
+        source_name = e.find('div', class_='title').find('span', class_='filename').string
+        source_size = e.find('div', class_='title').find('span', class_='filesize').string
         try:
             p = e.find('p', attrs={'class': 'desc'}, text='磁力')
             link = p.parent.get('href')
@@ -58,9 +60,10 @@ def get_actual_links(soup, tab_num):
                 link = ""
         finally:
             if link != "":
+                print("[*] <"+source_name+"> "+source_size+":")
                 print(link)
                 print()
-                down_links.append(link)
+                # down_links.append(link)
 
 
 def get_download_links(url, t):
