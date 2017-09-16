@@ -59,6 +59,7 @@ def get_actual_links(soup, tab_num):
         finally:
             if link != "":
                 print(link)
+                print()
                 down_links.append(link)
 
 
