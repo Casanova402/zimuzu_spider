@@ -110,9 +110,20 @@ def get_download_links(url, t):
             for tab in tab_list:
                 print(str(i) + ". " + tab.name)
                 i += 1
-            season_choose = tab_list[int(input("选择: ")) - 1]
+            while True:
+                num = int(input("选择: ")) - 1
+                if 0 <= num < len(tab_list):
+                    break
+                else:
+                    print("请输入正确的数字")
+            season_choose = tab_list[num]
         season_choose.print_source_li()
-        type_choose = int(input("选择: ")) - 1
+        while True:
+            type_choose = int(input("选择: ")) - 1
+            if 0 <= type_choose < len(season_choose.tab_num_list):
+                break
+            else:
+                print("请输入正确的数字")
         get_actual_links(soup, season_choose.tab_num_list[type_choose])
     else:
         print("没有资源")
@@ -159,7 +170,12 @@ def search(name, auto=False):
                       + resource.name+" "
                       + resource.type)
                 i += 1
-            num = input("输入资源号: ")
+            while True:
+                num = input("选择: ")
+                if 1 <= int(num) <= len(resource_list):
+                    break
+                else:
+                    print("请输入正确的数字")
             resource_choose = resource_list[int(num)-1]
             resource_url = get_resource_link(resource_choose.type, resource_choose.source_num)
             get_download_links(resource_url, resource_choose.type)
