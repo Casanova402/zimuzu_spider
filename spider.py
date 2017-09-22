@@ -1,7 +1,10 @@
 import re
 import requests
+import tkinter
 import bs4
 from bs4 import BeautifulSoup
+
+GUI = False
 
 
 header = {'Host': 'xiazai002.com',
@@ -12,6 +15,45 @@ header = {'Host': 'xiazai002.com',
               'Referer': '',
               'Connection': 'keep-alive',
               'Upgrade-Insecure-Requests': '1'}
+
+
+class SearchFrame(tkinter.Frame):
+    def __init__(self):
+        super().__init__()
+        self.master.title('Search')
+        self.center_window()
+        self.search_label = tkinter.Label(self, text='输入资源名称', width=400, height=1)
+        ''' 这个entry无法输入中文 '''
+        self.search_entry = tkinter.Entry(self, width=400)
+        self.show_frame = tkinter.Frame(self, width=400)
+        self.search_btn = tkinter.Button(self, text='Search', width=10, command=self.generate_btns)
+        self.source_btns = []
+
+        self.search_label.pack()
+        self.search_entry.pack()
+        self.search_btn.pack()
+        self.show_frame.pack(fill=tkinter.BOTH, expand=1)
+        # self.scrollbar.config(command=self.sh)
+
+        self.pack(fill=tkinter.BOTH, expand=1)
+
+    def center_window(self):
+        w = 400
+        h = 400
+        sw = self.master.winfo_screenwidth()
+        sh = self.master.winfo_screenheight()
+        x = (sw - w) / 2
+        y = (sh - h) / 2
+        self.master.geometry('%dx%d+%d+%d' % (w, h, x, y))
+
+    def generate_btns(self):
+        source_name = self.search_entry.get().strip()
+        if source_name != "":
+            resource_list = search_resources(source_name)
+            for resource in resource_list:
+                btn = tkinter.Button(self.show_frame, text=resource.name, width=400, height=1)
+                self.source_btns.append(btn)
+                btn.pack()
 
 
 class Resource:
@@ -186,4 +228,9 @@ def search(name, auto=False):
 
 
 if __name__ == '__main__':
-    search(input("输入要找的资源: "))
+    if GUI:
+        root = tkinter.Tk()
+        search_frame = SearchFrame()
+        root.mainloop()
+    else:
+        search(input("输入要找的资源: "))
