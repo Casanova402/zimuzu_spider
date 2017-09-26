@@ -1,6 +1,5 @@
 import re
 import requests
-import tkinter
 import bs4
 from bs4 import BeautifulSoup
 
